@@ -4,25 +4,41 @@ import pandas as pd
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
 app = Flask(__name__)
 
 def tokenize(text):
+    '''
+    This function tokenizes given text including splitting, lemmatizing and
+    removing stop words
+    
+    Parameters
+    ----------
+    text : Message passed as string
+
+    Returns
+    -------
+    clean_tokens : Tokenized message
+
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
-
+    stop_words = set(stopwords.words('english'))
+    
     clean_tokens = []
     for tok in tokens:
         clean_tok = lemmatizer.lemmatize(tok).lower().strip()
+        clean_tok = [w for w in clean_tok if w not in stopwords.words("english")]
         clean_tokens.append(clean_tok)
-
+    
     return clean_tokens
 
 # load data
@@ -39,12 +55,23 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    ## Extract top 10 categories in the data
+    graph_1 = round(df.drop(['id', 'message', 'original', 'genre'], axis = 1).mean() * 100, 2)
+    
+    graph_1.sort_values(0, inplace = True, ascending = False)
+    graph_2 = graph_1[0:10,]
+    
+    del graph_1
+    
+    top10_categories = list(graph_2.index)
+    top10_percentages = graph_2.values
+    
+    del graph_2
+    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
@@ -61,6 +88,24 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=top10_categories,
+                    y=top10_percentages
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 Categories',
+                'yaxis': {
+                    'title': "Percent Related Messages"
+                },
+                'xaxis': {
+                    'title': "Categories"
                 }
             }
         }
