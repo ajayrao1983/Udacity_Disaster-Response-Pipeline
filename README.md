@@ -26,6 +26,7 @@ Github link - https://github.com/ajayrao1983/Udacity_Disaster-Response-Pipeline
 6) create_engine from sqlalchemy
 
 ## Folder Structure and Files in Repository
+
 .
 |--app
 |  |- template
@@ -44,6 +45,7 @@ Github link - https://github.com/ajayrao1983/Udacity_Disaster-Response-Pipeline
 
 
 ##Project Description
+
 Following a disaster typcially, disaster response organizations will get millions of communication when they have the least resources to filter and respond to these messages.
 Most of the times, it is one in every thousand messages that might be relevant to the disaster response professionals. Different organizations take care of different parts of the problem so it is important to identify the right messages so the right organization can address the issue.
 Supervised machine learning can be more accurate than keyword search as keyword water might very few times actually relate to someone looking for fresh drinking water and will also miss people who say they're thirsty but don't use the word 'Water'. However, this is a big gap right now in disaster response contexts.
@@ -52,11 +54,13 @@ Figure eight has taken messages from different disasters and relabeled them so t
 This web app uses the prelabeled messages to train a multioutput classifier, which is then used to categorize a message to one of 36 categories.
 
 ##App Funcationality in more details
+
 The 'data' folder reads 'disaster_categories.csv' and 'disaster_messages.csv' files, cleans them, merges them and saves the data as a SQLlite database in the 'data' folder.
 The code in 'models' folder reads the data saved in the previous step, and trains a classifier. The trained model is saved as a pickle file in the 'models' folder.
 The app finally reads in the data saved in SQLlite database in the 'data' folder, and the saved pickel model file in the 'models' folder and displays the results.
 
 ## Instructions to run the app
+
 The main folder containing the 'data', 'models' and 'app' folders is referred to as 'root' folder.
 
 1. Run the following commands in the project's root directory to set up your database and model.
