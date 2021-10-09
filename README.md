@@ -28,19 +28,33 @@ Github link - https://github.com/ajayrao1983/Udacity_Disaster-Response-Pipeline
 ## Folder Structure and Files in Repository
 
 .
+
 |--app
+
 |  |- template
+
 |  |  |- master.html # main page of web app
+
 |  |  |- go.html # classification result page of web app
+
 |  |- run.py # Flask file that runs app. This app reads the data from the DisasterResponse.db in the 'data' folder and classifier.pkl model in the 'models' folder.
+
 |--data
+
 |  |- disaster_categories.csv # Has the categories for each message in the 'disaster_messages.csv' file. Categories are what we are trying to predict.
+
 |  |- disaster_messages.csv # Has the messages to be categorized.
+
 |  |- process_data.py # This file reads the messages and categories, merges the two dataframes and cleans the data so it is ready to train our model
+
 |  |- DisasterResponse.db # This is the database to store the cleaned dataframe
+
 |--models
+
 |  |- train_classifier.py # Reads the data stored in DisasterResponse.db, tokenizes the messages, trains a multioutput classifier pipeline, prints results and stores the final         model
+
 |  |- classifier.pkl # This is final model that is created once the train_classifier.py code is run
+
 |--README.md
 
 
